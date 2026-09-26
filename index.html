@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Profitable Global Niche Finder — Powered by ICA Framework</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800;900&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#07070b; --ink:#f4f4f7; --sub:#9a9ba8; --line:rgba(255,255,255,.09);
+  --violet:#4f7df5; --violet2:#1e40af; --mint:#22d3ee; --coral:#60a5fa; --glass:rgba(255,255,255,.045);
+  --grad:linear-gradient(90deg,var(--violet),var(--mint));
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;position:relative;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+h1,h2,h3{font-family:'Sora',sans-serif;font-weight:800;line-height:1.1;letter-spacing:-.02em}
+img{max-width:100%}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px 100px;position:relative;z-index:2}
+@media(max-width:420px){.wrap{padding:0 16px 90px}}
+.mono{font-family:'JetBrains Mono',monospace}
+.label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--mint);margin-bottom:12px;font-weight:600;display:flex;align-items:center;gap:8px}
+.label::before{content:'';width:18px;height:1px;background:var(--mint)}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% auto;animation:shift 6s ease-in-out infinite}
+@keyframes shift{0%,100%{background-position:0% center}50%{background-position:100% center}}
+
+/* Blob mesh background */
+.blob{position:fixed;border-radius:50%;filter:blur(80px);opacity:.32;z-index:0;pointer-events:none;animation:drift 18s ease-in-out infinite}
+.b1{width:520px;height:520px;background:var(--violet2);top:-160px;left:-160px}
+.b2{width:460px;height:460px;background:var(--mint);top:20%;right:-180px;animation-delay:-6s}
+.b3{width:420px;height:420px;background:var(--coral);bottom:-160px;left:20%;animation-delay:-11s}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-30px) scale(1.12)}}
+@media(prefers-reduced-motion:reduce){.blob{animation:none}.grad{animation:none}}
+
+input,textarea,select{width:100%;background:rgba(255,255,255,.04);border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;color:var(--ink);font-family:'Manrope',sans-serif;font-size:14.5px;margin-top:6px}
+select{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--sub) 50%),linear-gradient(135deg,var(--sub) 50%,transparent 50%);background-position:calc(100% - 20px) center,calc(100% - 15px) center;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+select option{background:#12131a;color:var(--ink)}
+input::placeholder,textarea::placeholder{color:#5c5d6a}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--violet);box-shadow:0 0 0 3px rgba(59,108,244,.15)}
+input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus,input:-webkit-autofill:active,
+textarea:-webkit-autofill,textarea:-webkit-autofill:hover,textarea:-webkit-autofill:focus,
+select:-webkit-autofill,select:-webkit-autofill:hover,select:-webkit-autofill:focus{
+  -webkit-text-fill-color:var(--ink)!important;
+  -webkit-box-shadow:0 0 0 1000px #14151d inset!important;
+  box-shadow:0 0 0 1000px #14151d inset!important;
+  caret-color:var(--ink);
+  transition:background-color 9999s ease-in-out 0s;
+}
+select{color-scheme:dark}
+label.f{display:block;font-size:13.5px;color:var(--sub);margin-top:20px;font-weight:600}
+.phoneRow{display:flex;gap:8px;margin-top:6px}
+.phoneRow select{width:112px;flex-shrink:0;margin-top:0}
+.phoneRow input{margin-top:0;flex:1;min-width:0}
+.hint{font-size:12.5px;color:#83848f;margin-top:12px;line-height:1.55}
+.ex{font-size:12px;color:#8a8b96;background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:8px;padding:9px 11px;margin-top:10px;font-style:italic}
+.hint+.ex{margin-top:10px}
+.ex+textarea,.ex+input,.hint+textarea,.hint+input{margin-top:18px}
+
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--grad);color:#061024;font-weight:800;padding:19px 38px;border:none;border-radius:99px;cursor:pointer;font-size:16.5px;position:relative;overflow:hidden;box-shadow:0 10px 34px rgba(30,64,175,.4);transition:.25s}
+.btn:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 18px 48px rgba(30,64,175,.55)}
+.btn::after{content:'';position:absolute;top:0;left:-60%;width:50%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);transition:.5s}
+.btn:hover::after{left:130%}
+.btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink);box-shadow:none}
+.btn.sm{padding:8px 15px;font-size:12px;border-radius:99px}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+.card{background:var(--glass);backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:18px;padding:22px;margin-top:14px;transition:.3s}
+.progress{height:5px;background:var(--line);border-radius:3px;margin:24px 0;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--grad);transition:width .35s;box-shadow:0 0 12px rgba(59,108,244,.6)}
+.step{display:none}
+.step.on{display:block}
+.navrow{display:flex;justify-content:space-between;margin-top:26px;gap:12px;flex-wrap:wrap}
+@media(max-width:420px){.btn{padding:15px 26px;font-size:14.5px}.navrow{flex-direction:column-reverse}.navrow .btn{width:100%;justify-content:center}}
+.hidden{display:none!important}
+.loader{text-align:center;padding:90px 0}
+.spinner{width:46px;height:46px;border:3px solid var(--line);border-top-color:var(--violet);border-radius:50%;margin:0 auto 18px;animation:spin .9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.err{color:var(--coral);font-size:13px;margin-top:10px}
+.small{font-size:12px;color:var(--sub);margin-top:14px}
+a.link{color:var(--mint);font-weight:700}
+ul.clean{list-style:none;margin-top:8px}
+ul.clean li{padding:9px 0;border-bottom:1px dashed var(--line);font-size:13.5px;color:#dcdce2;display:flex;gap:9px}
+ul.clean li::before{content:'→';color:var(--mint);flex-shrink:0;font-weight:700}
+.reveal{opacity:0;transform:translateY(22px);transition:.7s cubic-bezier(.2,.7,.3,1)}
+.reveal.on{opacity:1;transform:none}
+
+nav.top{display:flex;justify-content:space-between;align-items:center;padding:20px 0;flex-wrap:wrap;gap:10px}
+.wordmark{font-family:'Sora',sans-serif;font-weight:800;font-size:15px}
+.wordmark span{color:var(--mint)}
+.navLogo{height:26px;width:auto;display:block}
+.navbadge{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--sub);border:1px solid var(--line);border-radius:99px;padding:5px 12px;white-space:nowrap}
+@media(max-width:380px){.navLogo{height:22px}.navbadge{font-size:9px;padding:4px 9px}}
+
+.hero{padding:36px 0 16px;text-align:center}
+.hero h1{font-size:clamp(36px,7vw,68px);letter-spacing:-.03em}
+.hero .tag{font-size:17px;color:var(--sub);margin-top:16px;margin-bottom:8px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.tagDot{width:6px;height:6px;border-radius:50%;background:var(--mint);box-shadow:0 0 8px var(--mint),0 0 16px var(--mint);flex-shrink:0}
+@media(min-width:700px){.hero .tag{flex-wrap:nowrap;white-space:nowrap;font-size:clamp(13px,1.7vw,17px)}}
+.hero p{font-size:14.5px;color:#c3c4cc;margin-top:18px;line-height:1.7;max-width:560px;margin-left:auto;margin-right:auto}
+.hero p b{color:#fff}
+.heroCTA{margin-top:30px}
+
+/* Global orbit stage around host photo */
+.graticule{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 64px),repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 64px);
+  -webkit-mask-image:radial-gradient(ellipse 70% 55% at 50% 18%,#000 40%,transparent 85%);mask-image:radial-gradient(ellipse 70% 55% at 50% 18%,#000 40%,transparent 85%)}
+.orbitStage{position:relative;width:470px;height:470px;margin:60px auto 0;display:flex;align-items:center;justify-content:center}
+.ring{position:absolute;top:50%;left:50%;border:1px dashed rgba(255,255,255,.16);border-radius:50%;transform:translate(-50%,-50%)}
+.ring1{width:400px;height:400px;animation:spin 34s linear infinite;border-color:rgba(59,108,244,.32)}
+.ring2{width:320px;height:320px;animation:spinRev 24s linear infinite;border-color:rgba(34,211,238,.28)}
+.ring3{width:470px;height:470px;animation:spin 46s linear infinite;border-color:rgba(96,165,250,.2)}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes spinRev{to{transform:translate(-50%,-50%) rotate(-360deg)}}
+.photoBadge{position:relative;width:260px;height:260px}
+.orbitPhotoWrap{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.12);box-shadow:0 0 0 10px rgba(255,255,255,.02),0 30px 60px rgba(0,0,0,.55)}
+.orbitPhotoWrap::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 20%,rgba(59,108,244,.18),transparent 60%)}
+.orbitPhotoWrap img{width:100%;height:100%;object-fit:cover;display:block}
+.photoCore{display:flex;flex-direction:column;align-items:center}
+.nameRing{position:absolute;inset:-19%;width:138%;height:138%;pointer-events:none}
+.ringName{font-family:'Caveat',cursive;font-weight:700;fill:var(--mint);filter:drop-shadow(0 0 5px rgba(34,211,238,.6))}
+.ringSub{font-family:'Caveat',cursive;font-weight:600;fill:#c9cddb}
+@media(max-width:640px){.photoBadge{width:190px;height:190px}}
+@media(max-width:380px){.photoBadge{width:160px;height:160px}}
+@media(min-width:1200px){.photoBadge{width:290px;height:290px}}
+.pin{position:absolute;background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-size:11.5px;font-family:'JetBrains Mono',monospace;display:flex;align-items:center;gap:6px;animation:pinFloat 4.5s ease-in-out infinite;white-space:nowrap}
+@keyframes pinFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.p1{top:-6%;left:4%;animation-delay:0s;border-color:rgba(59,108,244,.4)}
+.p2{top:12%;right:-10%;animation-delay:.6s;border-color:rgba(34,211,238,.4)}
+.p3{bottom:14%;right:-16%;animation-delay:1.2s;border-color:rgba(96,165,250,.4)}
+.p4{bottom:-4%;left:10%;animation-delay:1.8s;border-color:rgba(59,108,244,.4)}
+.p5{top:44%;left:-14%;animation-delay:2.4s;border-color:rgba(34,211,238,.4)}
+@media(max-width:640px){.orbitStage{width:350px;height:350px;margin-top:40px}.ring1{width:300px;height:300px}.ring2{width:235px;height:235px}.ring3{width:350px;height:350px}.pin{font-size:10px;padding:5px 9px}.p1{left:2%}.p2{right:0%;top:8%}.p3{right:-2%;bottom:10%}.p4{left:6%}.p5{left:-2%}}
+@media(max-width:380px){.orbitStage{width:295px;height:295px}.ring1{width:250px;height:250px}.ring2{width:200px;height:200px}.ring3{width:295px;height:295px}.pin{font-size:9px;padding:4px 8px}}
+@media(min-width:1200px){.orbitStage{width:530px;height:530px}.ring1{width:450px;height:450px}.ring2{width:360px;height:360px}.ring3{width:530px;height:530px}}
+
+.marquee{margin-top:40px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;white-space:nowrap}
+.mtrack{display:inline-block;animation:scroll 20s linear infinite;font-family:'JetBrains Mono',monospace;color:var(--sub);font-size:12.5px;letter-spacing:.06em}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.mtrack span{margin:0 30px;color:var(--mint)}
+
+.chipGrid{display:flex;flex-wrap:wrap;gap:9px;margin-top:22px;justify-content:center}
+.chip{font-size:12.5px;padding:8px 15px;border-radius:99px;border:1px solid var(--line);background:var(--glass);display:flex;align-items:center;gap:6px;transition:.2s}
+.chip:hover{transform:translateY(-2px);border-color:var(--violet)}
+.chip b{color:var(--mint)}
+
+.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+.bento .bc{grid-column:span 2;background:var(--glass);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:18px;padding:20px;transition:.3s;position:relative;overflow:hidden}
+.bento .bc:nth-child(1),.bento .bc:nth-child(6){grid-column:span 4}
+.bento .bc:hover{transform:translateY(-5px);border-color:rgba(59,108,244,.5);box-shadow:0 14px 34px rgba(0,0,0,.35)}
+.bento .bc .n{font-family:'Sora',sans-serif;font-weight:900;font-size:26px;opacity:.35}
+.bento .bc h3{font-size:15px;margin-top:6px}
+.bento .bc p{font-size:12.5px;color:var(--sub);margin-top:6px;line-height:1.55}
+@media(max-width:820px){.bento{grid-template-columns:1fr 1fr}.bento .bc{grid-column:span 2!important}}
+@media(max-width:480px){.bento{grid-template-columns:1fr}.bento .bc h3{font-size:14.5px}}
+
+.stepRow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:20px}
+.stepRow .sc{background:var(--glass);border:1px solid var(--line);border-radius:16px;padding:18px}
+.stepRow .sc .circ{width:30px;height:30px;border-radius:50%;background:var(--grad);color:#0a0812;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif}
+.stepRow .sc h3{font-size:14px;margin-top:10px}
+.stepRow .sc p{font-size:11.5px;color:var(--sub);margin-top:5px;line-height:1.5}
+@media(max-width:820px){.stepRow{grid-template-columns:1fr 1fr}}
+@media(max-width:420px){.stepRow{grid-template-columns:1fr}}
+
+.important{border:1px solid rgba(96,165,250,.4);background:rgba(96,165,250,.06);border-radius:16px;padding:20px;margin-top:30px}
+.important .label{color:var(--coral)}
+.important .label::before{background:var(--coral)}
+.important p{font-size:13.5px;color:#d7e3fb;line-height:1.65;margin-top:6px}
+
+.pillGrid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.pillOpt{border:1.5px solid var(--line);border-radius:99px;padding:9px 16px;font-size:13px;cursor:pointer;user-select:none;transition:.15s;background:var(--glass)}
+.pillOpt.sel{background:var(--grad);border-color:transparent;color:#0a0812;font-weight:700}
+
+.qWatermark{font-family:'Sora',sans-serif;font-weight:900;font-size:100px;position:absolute;right:0;top:-10px;opacity:.04;z-index:-1;user-select:none}
+@media(max-width:640px){.qWatermark{font-size:64px;top:-4px}}
+
+.voiceWrap{position:relative}
+.voiceWrap input,.voiceWrap textarea{padding-right:44px}
+.micBtn{position:absolute;top:10px;right:7px;width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.06);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;line-height:1;padding:0;transition:.2s;color:var(--sub)}
+.micBtn.inline{top:50%;transform:translateY(-50%)}
+.micBtn:hover{border-color:var(--violet)}
+.micBtn.listening{background:var(--grad);border-color:transparent;animation:micPulse 1.2s ease-in-out infinite}
+.micBtn.inline.listening{transform:translateY(-50%)}
+@keyframes micPulse{0%,100%{box-shadow:0 0 0 0 rgba(34,211,238,.5)}50%{box-shadow:0 0 0 7px rgba(34,211,238,0)}}
+.voiceHint{font-size:10.5px;color:var(--sub);margin-top:6px;display:none}
+.voiceHint.on{display:block}
+.micErr{font-size:11.5px;color:var(--coral);margin-top:6px;display:none}
+.micErr.on{display:block}
+
+.sumStrip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.sumBox{background:var(--glass);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:16px;padding:16px}
+.sumBox.v{border-color:rgba(59,108,244,.4)} .sumBox.c{border-color:rgba(96,165,250,.4)} .sumBox.m{border-color:rgba(34,211,238,.4)}
+.sumBox .k{font-size:10.5px;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;font-family:'JetBrains Mono',monospace}
+.sumBox .v2{font-weight:700;font-size:13.5px;margin-top:6px;line-height:1.4}
+@media(max-width:640px){.sumStrip{grid-template-columns:1fr}}
+
+.oneLiner{border:1.5px solid transparent;background:linear-gradient(var(--bg),var(--bg)) padding-box,var(--grad) border-box;border-radius:20px;padding:24px;margin-top:22px}
+.oneLiner .txt{font-family:'Sora',sans-serif;font-weight:800;font-size:19px;line-height:1.5;margin-top:6px}
+.olRow{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:1px dashed var(--line)}
+.olRow>div{flex:1;min-width:0}
+.olRow:last-child{border-bottom:none}
+.olRow .ok{font-size:11px;color:var(--sub);text-transform:uppercase;letter-spacing:.05em;font-family:'JetBrains Mono',monospace}
+.olRow .ov{font-size:14px;margin-top:4px}
+
+.acc{border:1px solid var(--line);border-radius:16px;margin-top:12px;overflow:hidden;background:var(--glass);backdrop-filter:blur(14px)}
+.accHead{display:flex;justify-content:space-between;align-items:center;padding:17px 19px;cursor:pointer}
+.accHead h3{font-size:14.5px}
+.accHead .n{font-family:'Sora',sans-serif;font-weight:800;font-size:12px;color:#0a0812;background:var(--grad);border-radius:8px;padding:3px 8px;margin-right:10px}
+.accArrow{transition:.25s;color:var(--sub)}
+.acc.open .accArrow{transform:rotate(180deg);color:var(--mint)}
+.accBody{max-height:0;overflow:hidden;transition:.35s}
+.acc.open .accBody{max-height:5000px;padding:0 19px 19px}
+
+.subcard{border:1px solid var(--line);border-radius:12px;padding:15px;margin-top:10px;background:rgba(255,255,255,.025)}
+.subcard h4{font-size:13.5px;font-weight:700;color:#fff}
+.subcard .t{font-size:10.5px;color:var(--mint);text-transform:uppercase;font-family:'JetBrains Mono',monospace;margin-top:9px}
+.subcard .d{font-size:13px;color:#d3d4da;margin-top:2px;line-height:1.55}
+
+.factorGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+.factorGrid .f{font-size:13px;color:#d3d4da}
+.factorGrid .f b{display:block;font-size:11px;color:var(--mint);text-transform:uppercase;font-family:'JetBrains Mono',monospace;margin-bottom:3px}
+@media(max-width:560px){.factorGrid{grid-template-columns:1fr}}
+
+.weekRow{display:grid;grid-template-columns:90px 1fr;gap:14px;padding:13px 0;border-bottom:1px dashed var(--line)}
+.weekRow:last-child{border-bottom:none}
+.weekRow .wk{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mint);font-weight:700}
+.weekRow .wt{font-weight:700;font-size:13.5px;color:#fff}
+.weekRow ul{margin-top:6px}
+@media(max-width:460px){.weekRow{grid-template-columns:1fr}.weekRow .wk{margin-bottom:2px}}
+
+.finalGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.finalGrid .fi{background:var(--glass);border:1px solid var(--line);border-radius:12px;padding:13px 16px}
+.finalGrid .fi .k{font-size:10.5px;color:var(--mint);text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+.finalGrid .fi .v2{font-size:13px;font-weight:600;margin-top:3px;color:#eee}
+@media(max-width:560px){.finalGrid{grid-template-columns:1fr}}
+
+.toast{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--grad);color:#0a0812;font-weight:700;padding:11px 20px;border-radius:99px;font-size:13px;opacity:0;pointer-events:none;transition:.25s;z-index:99}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(-4px)}
+
+/* Wide-desktop side rails — fill the empty gutters on big screens */
+.rail{display:none}
+@media(min-width:1360px){
+  .wrap{max-width:980px}
+  .rail{display:block;position:fixed;top:0;bottom:0;width:180px;z-index:1;pointer-events:none}
+  .railL{left:max(24px,calc(50% - 700px))}
+  .railR{right:max(24px,calc(50% - 700px))}
+  .railInner{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center}
+  .railLine{width:1px;height:38vh;background:linear-gradient(to bottom,transparent,var(--line) 20%,var(--line) 80%,transparent)}
+  .railWord{writing-mode:vertical-rl;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.25em;color:var(--sub);text-transform:uppercase;margin:18px 0}
+  .railDot{width:6px;height:6px;border-radius:50%;background:var(--mint);box-shadow:0 0 10px var(--mint);animation:dotPulse 2.6s ease-in-out infinite}
+  @keyframes dotPulse{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:1;transform:scale(1.5)}}
+  .railStats{display:flex;flex-direction:column;gap:14px;pointer-events:auto}
+  .railStat{background:var(--glass);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:14px;padding:14px 16px;width:150px;text-align:center;animation:pinFloat 5s ease-in-out infinite}
+  .railStat:nth-child(2){animation-delay:.8s}
+  .railStat:nth-child(3){animation-delay:1.6s}
+  .railStat .rv{font-family:'Sora',sans-serif;font-weight:800;font-size:19px;color:var(--mint)}
+  .railStat .rk{font-size:10px;color:var(--sub);margin-top:3px;text-transform:uppercase;letter-spacing:.05em;font-family:'JetBrains Mono',monospace}
+}
+@media(min-width:1600px){.railL{left:calc(50% - 760px)}.railR{right:calc(50% - 760px)}}
+</style>
+</head>
+<body>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="graticule"></div>
+
+<div class="rail railL"><div class="railInner">
+  <div class="railDot"></div><div class="railLine"></div>
+  <div class="railWord">GLOBAL POSITIONING</div>
+  <div class="railLine"></div><div class="railDot"></div>
+</div></div>
+
+<div class="rail railR"><div class="railInner">
+  <div class="railStats">
+    <div class="railStat"><div class="rv">7 yrs</div><div class="rk">Experience</div></div>
+    <div class="railStat"><div class="rv">$1M+</div><div class="rk">Generated</div></div>
+    <div class="railStat"><div class="rv">3,000+</div><div class="rk">Experts Coached Globally</div></div>
+  </div>
+</div></div>
+
+<div class="wrap">
+
+<nav class="top"><img src="/_blob/d04d164e3b95134ef8d02e7848cebb7e" alt="ICA Framework" class="navLogo"><div class="navbadge">✦ GLOBAL NICHE FINDER</div></nav>
+
+<div id="landing">
+  <div class="hero">
+    <div class="label" style="justify-content:center">GLOBAL NICHE FINDER</div>
+    <h1>Find your <span class="grad">profitable global niche</span></h1>
+    <div class="tag">Find the right market<span class="tagDot"></span>Build the right offer<span class="tagDot"></span>Position yourself for global clients</div>
+
+    <div class="orbitStage reveal">
+      <div class="ring ring3"></div><div class="ring ring1"></div><div class="ring ring2"></div>
+      <div class="photoCore">
+        <div class="photoBadge">
+          <div class="orbitPhotoWrap"><img src="/_blob/babb9dc0c892f11cd2682a7cb17e1b4b" alt="Darshit, founder of ICA"></div>
+          <svg class="nameRing" viewBox="0 0 200 200">
+            <defs>
+              <path id="ringTop" d="M 26.5,100 A 73.5,73.5 0 0,1 173.5,100" fill="none"/>
+              <path id="ringBottom" d="M 26.5,100 A 73.5,73.5 0 0,0 173.5,100" fill="none"/>
+            </defs>
+            <text class="ringName" font-size="8.5"><textPath href="#ringTop" startOffset="50%" text-anchor="middle">Darshit</textPath></text>
+            <text class="ringSub" font-size="6.2" letter-spacing="0.15"><textPath href="#ringBottom" startOffset="50%" text-anchor="middle">Your International Coach</textPath></text>
+          </svg>
+        </div>
+      </div>
+      <div class="pin p1">🇺🇸 US</div>
+      <div class="pin p2">🇬🇧 UK</div>
+      <div class="pin p3">🇦🇪 UAE</div>
+      <div class="pin p4">🇦🇺 AU</div>
+      <div class="pin p5">🇸🇬 SG</div>
+    </div>
+
+    <p style="margin-top:44px">You already have skills.<br>The real question is: <b>where can those skills create the most valuable business opportunity for you?</b></p>
+    <div class="heroCTA reveal" style="margin-top:30px"><button class="btn" onclick="showForm()">Build My Global Niche →</button></div>
+    <div class="small">Powered by the ICA Framework · takes ~2 minutes</div>
+
+    <div class="chipGrid reveal">
+      <div class="chip">✓ <b>Global</b> target markets</div><div class="chip">✓ <b>Profitable</b> niches</div>
+      <div class="chip">✓ <b>High value</b> services</div><div class="chip">✓ <b>Offer</b> opportunities</div>
+      <div class="chip">✓ <b>Pricing</b> direction</div><div class="chip">✓ <b>Acquisition</b> platforms</div>
+      <div class="chip">✓ <b>Positioning</b> angles</div><div class="chip">✓ <b>One line</b> offers</div>
+      <div class="chip">✓ <b>Risk reversal</b> strategies</div><div class="chip">✓ <b>30 day</b> action plan</div>
+    </div>
+  </div>
+
+  <div class="marquee"><div class="mtrack">
+    <span>SKILL</span>→<span>MARKET</span>→<span>OFFER</span>→<span>PRICE</span>→<span>POSITIONING</span>→<span>ACQUISITION</span>
+    <span>SKILL</span>→<span>MARKET</span>→<span>OFFER</span>→<span>PRICE</span>→<span>POSITIONING</span>→<span>ACQUISITION</span>
+  </div></div>
+
+  <div style="margin-top:44px">
+    <div class="label">WHAT YOU WILL DISCOVER</div>
+    <div class="bento" id="discoverGrid"></div>
+  </div>
+
+  <div style="margin-top:44px">
+    <div class="label">HOW IT WORKS</div>
+    <div class="stepRow" id="howGrid"></div>
+  </div>
+
+  <div class="important reveal">
+    <div class="label">GIVE SPECIFIC ANSWERS</div>
+    <p>The more specific your answers, the more useful your recommendations. Don't give the answer you think the system wants — tell us what you actually know, what you can actually do, and the results you can realistically create.</p>
+  </div>
+
+  <div style="margin-top:34px;text-align:center"><button class="btn" onclick="showForm()">Build My Global Niche →</button></div>
+  <div class="small" style="text-align:center">Already did this? <a class="link" href="#" onclick="lookup();return false">Enter your email to view your blueprint</a></div>
+</div>
+
+<div id="form" class="hidden" style="padding-top:34px;position:relative">
+  <div class="label" id="progLabel">QUESTION 1 OF 11</div>
+  <div class="progress"><i id="prog" style="width:9%"></i></div>
+
+  <div class="step on" data-s="1"><span class="qWatermark">01</span>
+    <h2 style="font-size:22px">Let's start with the basics</h2>
+    <p class="hint">So we can personalize your blueprint and send it to you.</p>
+    <label class="f">Full name<input id="name"></label>
+    <label class="f">Email<input id="email" type="email"></label>
+    <label class="f">Phone number
+      <div class="phoneRow">
+        <select id="phoneCode">
+          <option value="+91">🇮🇳 +91</option>
+          <option value="+1">🇺🇸 +1</option>
+          <option value="+44">🇬🇧 +44</option>
+          <option value="+971">🇦🇪 +971</option>
+          <option value="+61">🇦🇺 +61</option>
+          <option value="+65">🇸🇬 +65</option>
+          <option value="+49">🇩🇪 +49</option>
+          <option value="+33">🇫🇷 +33</option>
+          <option value="other">🌍 Other</option>
+        </select>
+        <input id="phone" inputmode="tel" placeholder="Phone number">
+      </div>
+    </label>
+    <label class="f">City<input id="city"></label>
+    <label class="f">Age range<select id="age"><option value="">Select...</option><option>18–24</option><option>25–34</option><option>35–44</option><option>45–54</option><option>55+</option></select></label>
+    <label class="f">How long have you been working / in business?<select id="workExp"><option value="">Select...</option><option>Just starting (0–1 yr)</option><option>1–3 years</option><option>3–5 years</option><option>5–10 years</option><option>10+ years</option></select></label>
+  </div>
+
+  <div class="step" data-s="2"><span class="qWatermark">02</span>
+    <h2 style="font-size:22px">What are your strongest skills?</h2>
+    <p class="hint">List the skills you can confidently use to create value for a client.</p>
+    <div class="ex">Copywriting, paid advertising, sales, lead generation, graphic design, video editing, web development, coaching, consulting, SEO, social media marketing, business strategy.</div>
+    <textarea id="skills" rows="3" placeholder="List your strongest skills..."></textarea>
+  </div>
+
+  <div class="step" data-s="3"><span class="qWatermark">03</span>
+    <h2 style="font-size:22px">What experience or proof do you already have?</h2>
+    <p class="hint">Previous work, clients, results, achievements, years of experience, certifications. If starting from zero, just write "I am starting from zero."</p>
+    <textarea id="experience" rows="3" placeholder="Tell us about your experience, clients, results, or proof..."></textarea>
+  </div>
+
+  <div class="step" data-s="4"><span class="qWatermark">04</span>
+    <h2 style="font-size:22px">What exact service, coaching, or consulting do you currently provide?</h2>
+    <p class="hint">Use this structure: I help [TARGET AUDIENCE] achieve [MEASURABLE OUTCOME] through [SERVICE OR METHOD].</p>
+    <div class="ex">"I help coaches generate 20 to 30 qualified international leads per month through LinkedIn outbound systems."</div>
+    <textarea id="current" rows="3" placeholder="I help..."></textarea>
+  </div>
+
+  <div class="step" data-s="5"><span class="qWatermark">05</span>
+    <h2 style="font-size:22px">Who exactly do you want to serve?</h2>
+    <p class="hint">Enter 3 to 5 target audiences, industries, or client types.</p>
+    <div class="ex">Coaches, consultants, SaaS founders, agency owners, real estate companies.</div>
+    <textarea id="audiences" rows="2" placeholder="My target audiences are..."></textarea>
+  </div>
+
+  <div class="step" data-s="6"><span class="qWatermark">06</span>
+    <h2 style="font-size:22px">What specific problem do you solve?</h2>
+    <p class="hint">Avoid vague answers like "business growth" or "better marketing" — describe the actual problem.</p>
+    <div class="ex">"My clients struggle to consistently generate qualified international leads."</div>
+    <textarea id="problem" rows="3" placeholder="The problem I solve is..."></textarea>
+  </div>
+
+  <div class="step" data-s="7"><span class="qWatermark">07</span>
+    <h2 style="font-size:22px">What measurable outcome can you help your client achieve?</h2>
+    <p class="hint">A specific quantity, percentage, revenue figure, number of clients, leads, appointments, savings, etc.</p>
+    <div class="ex">20–30 qualified leads/month · 5–10 new clients/month · 30% lower CAC · ₹10L additional monthly revenue.</div>
+    <textarea id="outcome" rows="2" placeholder="My measurable client outcome is..."></textarea>
+  </div>
+
+  <div class="step" data-s="8"><span class="qWatermark">08</span>
+    <h2 style="font-size:22px">How long does your service typically take?</h2>
+    <div class="ex">7 days · 30 days · 60 days · 90 days · 6 months</div>
+    <input id="duration" placeholder="Service duration...">
+  </div>
+
+  <div class="step" data-s="9"><span class="qWatermark">09</span>
+    <h2 style="font-size:22px">What do you currently charge?</h2>
+    <p class="hint">Your current price and currency. If you don't currently charge, write "I currently don't charge."</p>
+    <input id="price" placeholder="Current pricing...">
+  </div>
+
+  <div class="step" data-s="10"><span class="qWatermark">10</span>
+    <h2 style="font-size:22px">Which global markets are you interested in?</h2>
+    <div class="pillGrid" id="marketPills"></div>
+  </div>
+
+  <div class="step" data-s="11"><span class="qWatermark">11</span>
+    <h2 style="font-size:22px">What is your preferred business model?</h2>
+    <div class="pillGrid" id="modelPills"></div>
+  </div>
+
+  <div id="formErr" class="err hidden"></div>
+  <div class="voiceHint" id="voiceHint" style="text-align:center">🎤 Tip: tap the mic icon on the longer questions to answer by voice instead of typing.</div>
+  <div class="navrow">
+    <button class="btn ghost" id="backBtn" onclick="nav(-1)">Back</button>
+    <button class="btn" id="nextBtn" onclick="nav(1)">Continue →</button>
+  </div>
+</div>
+
+<div id="loading" class="hidden loader">
+  <div class="spinner"></div>
+  <div class="label" style="justify-content:center;display:flex">RUNNING THE ICA FRAMEWORK</div>
+  <p style="color:var(--sub);font-size:14px">Analyzing your niche, offer, pricing and acquisition strategy…</p>
+</div>
+
+<div id="dashboard" class="hidden" style="padding-top:34px"></div>
+
+<footer style="margin-top:70px;padding-top:32px;border-top:1px solid var(--line);text-align:center">
+  <img src="/_blob/d04d164e3b95134ef8d02e7848cebb7e" alt="ICA Framework" style="height:24px;opacity:.85">
+  <div class="small" style="margin-top:12px">© 2026 ICA Framework. All rights reserved.</div>
+  <div class="small" style="margin-top:6px"><a class="link" href="#" onclick="adminPreview();return false" style="opacity:.6;font-size:11px">Preview results page →</a></div>
+</footer>
+
+</div>
+
+<div class="toast" id="toast">✓ Copied</div>
+
+<script>
+const discover=[["01","Your Global Niche Opportunities","Markets and client segments relevant to your existing skills and experience."],
+["02","Your Service Opportunities","Multiple ways to package your skills into services that solve valuable problems."],
+["03","High Value Market Opportunities","Industries and client types where your skill set may have stronger commercial value."],
+["04","Your Positioning","Exactly who you help, what problem you solve, and what outcome you create."],
+["05","Your Offer","Your expertise turned into a clear service or consulting offer."],
+["06","Your Pricing Direction","The factors that should influence your pricing, and a potential range."],
+["07","Global Acquisition Channels","Platforms and channels where your potential clients may be accessible."],
+["08","Your One Line Offer","A concise positioning statement — market, problem, outcome, mechanism, timeline."]];
+document.getElementById('discoverGrid').innerHTML=discover.map(d=>`<div class="bc reveal"><div class="n">${d[0]}</div><h3>${d[1]}</h3><p>${d[2]}</p></div>`).join('');
+
+const how=[["1","Tell us about yourself","Share your skills, experience, services, clients, market, pricing and goals."],
+["2","Let the ICA Framework analyze","Your answers are processed across positioning and commercial factors."],
+["3","Receive your blueprint","A practical strategy covering niche, market, offer, pricing and next steps."],
+["4","Take it to market","Use it as a starting point to test your positioning with real prospects."]];
+document.getElementById('howGrid').innerHTML=how.map(s=>`<div class="sc"><div class="circ">${s[0]}</div><h3>${s[1]}</h3><p>${s[2]}</p></div>`).join('');
+
+const markets=["United States","United Kingdom","United Arab Emirates","Canada","Australia","Europe","Singapore","Other","Global","Not sure"];
+const models=["Done For You","Done With You","Consulting","Coaching","Training","Agency","Freelance","Productized Service","Retainer","Project Based","Not Sure"];
+let selMarkets=new Set(), selModels=new Set();
+function renderPills(){
+  document.getElementById('marketPills').innerHTML=markets.map(m=>`<div class="pillOpt" onclick="togglePill(this,'market','${m}')">${m}</div>`).join('');
+  document.getElementById('modelPills').innerHTML=models.map(m=>`<div class="pillOpt" onclick="togglePill(this,'model','${m}')">${m}</div>`).join('');
+}
+renderPills();
+initVoiceInput();
+
+function initVoiceInput(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){
+    document.querySelectorAll('#form textarea').forEach(field=>{
+      const note=document.createElement('div'); note.className='hint';
+      note.textContent="Voice input isn't supported in this browser — please type your answer.";
+      field.parentNode.insertBefore(note, field.nextSibling);
+    });
+    return;
+  }
+  const hint=document.getElementById('voiceHint'); if(hint) hint.classList.add('on');
+  let recognition=null, activeField=null, gotSpeech=false;
+  document.querySelectorAll('#form textarea').forEach(field=>{
+    const wrap=document.createElement('div');
+    wrap.className='voiceWrap';
+    field.parentNode.insertBefore(wrap,field);
+    wrap.appendChild(field);
+    const btn=document.createElement('button');
+    btn.type='button';
+    btn.className='micBtn'+(field.tagName==='INPUT'?' inline':'');
+    btn.innerHTML='🎤';
+    btn.setAttribute('aria-label','Answer with your voice');
+    wrap.appendChild(btn);
+    const err=document.createElement('div');
+    err.className='micErr';
+    wrap.parentNode.insertBefore(err, wrap.nextSibling);
+    btn.addEventListener('click',()=>toggleVoice(field,btn,err));
+  });
+
+  function toggleVoice(field,btn,err){
+    if(recognition && activeField===field){ recognition.stop(); return; }
+    if(recognition){ recognition.stop(); }
+    err.textContent=''; err.classList.remove('on');
+    recognition=new SR();
+    recognition.lang='en-US';
+    recognition.continuous=true;
+    recognition.interimResults=true;
+    activeField=field; gotSpeech=false;
+    btn.classList.add('listening'); btn.innerHTML='⏹';
+    const baseValue=field.value ? field.value.trim()+' ' : '';
+    recognition.onresult=(e)=>{
+      gotSpeech=true;
+      let transcript='';
+      for(let i=0;i<e.results.length;i++){ transcript+=e.results[i][0].transcript; }
+      field.value=(baseValue+transcript).trim();
+    };
+    const reset=()=>{ btn.classList.remove('listening'); btn.innerHTML='🎤'; if(activeField===field) activeField=null; };
+    recognition.onend=()=>{
+      reset();
+      if(!gotSpeech && err.dataset.shown!=='1'){ /* silent stop by user with no speech yet — no error needed */ }
+    };
+    recognition.onerror=(e)=>{
+      reset();
+      const messages={
+        'not-allowed':'Mic access was blocked — allow microphone permission for this page and try again.',
+        'service-not-allowed':'Mic access was blocked by the browser — allow microphone permission and try again.',
+        'audio-capture':'No microphone found on this device.',
+        'no-speech':'', // not really an error worth showing
+        'network':'Connection issue — check your internet and try again.'
+      };
+      const msg=messages[e.error]!==undefined?messages[e.error]:"Couldn't start voice input — please type your answer instead.";
+      if(msg){ err.textContent=msg; err.classList.add('on'); err.dataset.shown='1'; }
+    };
+    try{ recognition.start(); }
+    catch(ex){ reset(); err.textContent="Couldn't start voice input — please type your answer instead."; err.classList.add('on'); }
+  }
+}
+function togglePill(el,type,val){
+  const set=type==='market'?selMarkets:selModels;
+  if(set.has(val)){set.delete(val);el.classList.remove('sel')}else{set.add(val);el.classList.add('sel')}
+}
+
+let step=1, total=11, data={};
+function showForm(){document.getElementById('landing').classList.add('hidden');document.getElementById('form').classList.remove('hidden');document.querySelectorAll('.rail').forEach(r=>r.classList.add('hidden'));window.scrollTo(0,0)}
+function setProg(){document.getElementById('prog').style.width=(step/total*100)+'%';document.getElementById('progLabel').textContent=`QUESTION ${step} OF ${total}`;document.getElementById('backBtn').style.visibility=step===1?'hidden':'visible';document.getElementById('nextBtn').textContent=step===total?'Generate My Blueprint →':'Continue →'}
+function validate(){
+  const reqMap={1:['name','email','phone','city','age','workExp'],2:['skills'],3:['experience'],4:['current'],5:['audiences'],6:['problem'],7:['outcome'],8:['duration'],9:['price']};
+  if(reqMap[step]){for(const id of reqMap[step]){if(!document.getElementById(id).value.trim()){showErr();return false}}}
+  if(step===10 && selMarkets.size===0){showErr();return false}
+  if(step===11 && selModels.size===0){showErr();return false}
+  document.getElementById('formErr').classList.add('hidden');return true
+}
+function showErr(){document.getElementById('formErr').textContent='Please answer before continuing.';document.getElementById('formErr').classList.remove('hidden')}
+function nav(dir){
+  if(dir>0 && !validate())return;
+  document.querySelector(`.step[data-s="${step}"]`).classList.remove('on');
+  step+=dir; if(step<1)step=1;
+  if(step>total){collectAndRun();return}
+  document.querySelector(`.step[data-s="${step}"]`).classList.add('on');
+  setProg(); window.scrollTo(0,0);
+}
+setProg();
+
+// Admin preview: click the "Preview results page" link in the footer to jump straight
+// to a sample results dashboard, skipping the 11 questions — handy for design edits.
+function adminPreview(){
+  data={name:'Darshit',email:'preview@icaframework.com',phone:'+91 00000 00000',city:'Bengaluru',age:'25–34',workExp:'5–10 years',skills:'International client acquisition coaching, sales systems, positioning',experience:'7 years, $1M+ generated, 3,000+ experts coached globally',current:'I help coaches and consultants land international high-ticket clients through the ICA Framework',audiences:'Coaches, consultants, agency owners, service providers',problem:'They are stuck competing on price with local clients and have no system for reaching international buyers',outcome:'₹1 lakh/month in new international revenue',duration:'90 days',price:'₹47,000 program fee',markets:'United States, United Kingdom, UAE',models:'Coaching, Done With You'};
+  document.getElementById('landing').classList.add('hidden');
+  document.getElementById('form').classList.add('hidden');
+  document.querySelectorAll('.rail').forEach(r=>r.classList.add('hidden'));
+  renderDash(fallbackResult());
+  window.scrollTo(0,0);
+}
+if(new URLSearchParams(location.search).has('preview')) adminPreview();
+
+function collectAndRun(){
+  data={name:val('name'),email:val('email'),phone:(document.getElementById('phoneCode').value==='other'?'':document.getElementById('phoneCode').value+' ')+val('phone'),city:val('city'),age:val('age'),workExp:val('workExp'),skills:val('skills'),experience:val('experience'),current:val('current'),audiences:val('audiences'),problem:val('problem'),outcome:val('outcome'),duration:val('duration'),price:val('price'),markets:[...selMarkets].join(', '),models:[...selModels].join(', ')};
+  localStorage.setItem('icas_lead_'+data.email.toLowerCase(),JSON.stringify({data,result:null}));
+  document.getElementById('form').classList.add('hidden');
+  document.getElementById('loading').classList.remove('hidden');
+  runAnalysis();
+}
+function val(id){return document.getElementById(id).value.trim()}
+
+async function runAnalysis(){
+  try{
+    const sample=await claude.use('sample');
+    if(!sample){renderDash(fallbackResult());return}
+    const prompt=`You are the ICA Framework — a rigorous global positioning and pricing strategist for service experts, coaches and consultants trying to land international clients.
+
+Analyze the intake below and return ONLY valid JSON (no markdown fences, no prose outside the JSON) in EXACTLY this shape:
+
+{
+ "core":{"skill":"","problem":"","market":"","outcome":"","positioning":""},
+ "niches":[{"name":"","why":"","services":"","clients":""} x3],
+ "services":[{"name":"","problem":"","client":"","outcome":""} x4],
+ "high_value":[{"name":"","why":"","problem":"","service":"","outcome":""} x3],
+ "one_liner":{"primary":"","problem_based":"","transformation_based":"","commercial_based":""},
+ "pricing":{"range":"","logic":["" x4]},
+ "channels":{"primary":{"platform":"","why":""},"secondary":{"platform":"","why":""},"supporting":{"platform":"","why":""}},
+ "optimization":{"clarity":"","problem_strength":"","outcome_specificity":"","commercial_value":"","differentiation":"","proof":"","delivery":"","pricing":"","risk":""},
+ "recommendations":[{"title":"","why":""} x3],
+ "risk_reversal":"",
+ "final":{"skill":"","market":"","problem":"","outcome":"","service":"","offer":"","pricing":"","channel":"","positioning":"","timeline":"","risk":""}
+}
+
+RULES:
+- Every recommendation must connect directly to the user's submitted information — reference their actual skills, experience, audience or outcome.
+- Do NOT invent experience, client results, credentials, case studies, revenue, or proof the user did not provide.
+- Do NOT promise guaranteed income, guaranteed clients, or guaranteed results.
+- If exact pricing can't be justified, give a range and explain what moves it higher or lower.
+- risk_reversal must NOT be an unconditional guarantee — use conditional/milestone-based language (e.g. implementation support, defined revisions, milestone delivery).
+- Keep each string field concise: 1-3 sentences max, specific over generic.
+
+Intake:
+Name: ${data.name}
+City: ${data.city}
+Age range: ${data.age}
+Time working / in business: ${data.workExp}
+Skills: ${data.skills}
+Experience/proof: ${data.experience}
+Current offer: ${data.current}
+Target audiences: ${data.audiences}
+Problem solved: ${data.problem}
+Measurable outcome: ${data.outcome}
+Service duration: ${data.duration}
+Current pricing: ${data.price}
+Interested markets: ${data.markets}
+Preferred business model: ${data.models}`;
+    const result=await sample.json(prompt,{modelTier:'complex'});
+    localStorage.setItem('icas_lead_'+data.email.toLowerCase(),JSON.stringify({data,result}));
+    renderDash(result);
+  }catch(e){ renderDash(fallbackResult()); }
+}
+
+function fallbackResult(){
+  return {core:{skill:data.skills,problem:data.problem,market:data.audiences,outcome:data.outcome,positioning:data.current},
+  niches:[{name:"Refine with more detail",why:"Add more specifics to your skills and audience for a sharper match.",services:"—",clients:"—"}],
+  services:[{name:data.current||"Your current offer",problem:data.problem,client:data.audiences,outcome:data.outcome}],
+  high_value:[{name:"Refine with more detail",why:"—",problem:"—",service:"—",outcome:"—"}],
+  one_liner:{primary:`I help ${data.audiences||'[target market]'} achieve ${data.outcome||'[outcome]'} through ${data.skills||'[mechanism]'} within ${data.duration||'[timeframe]'}.`,problem_based:`I help ${data.audiences} solve ${data.problem}.`,transformation_based:`I help ${data.audiences} go from stuck to ${data.outcome}.`,commercial_based:`I help ${data.audiences} generate ${data.outcome}.`},
+  pricing:{range:data.price||"Not enough detail to price confidently",logic:["Value of the outcome delivered","Client purchasing power","Complexity and time required","Your current proof and credibility"]},
+  channels:{primary:{platform:"LinkedIn",why:"Highest-intent channel for reaching decision-makers directly."},secondary:{platform:"Referral network",why:"Warm intros convert faster while you build proof."},supporting:{platform:"Content/SEO",why:"Builds long-term inbound trust."}},
+  optimization:{clarity:"Refine your one-line offer for clarity.",problem_strength:"Sharpen the specific problem.",outcome_specificity:"Add numbers where possible.",commercial_value:"Tie the outcome to revenue or cost.",differentiation:"Clarify why you vs a generic alternative.",proof:"Gather case studies as you go.",delivery:"Define your delivery process.",pricing:"Anchor price to outcome value.",risk:"Consider a milestone-based risk reversal."},
+  recommendations:[{title:"Get more specific on outcome",why:"Vague outcomes reduce perceived value."},{title:"Narrow the target audience",why:"A sharper audience improves conversion."},{title:"Add proof where you have it",why:"Even small proof increases trust."}],
+  risk_reversal:"Consider offering a defined support period or milestone-based delivery rather than an unconditional guarantee.",
+  final:{skill:data.skills,market:data.audiences,problem:data.problem,outcome:data.outcome,service:data.current,offer:data.current,pricing:data.price,channel:"LinkedIn",positioning:data.current,timeline:data.duration,risk:"Milestone-based"}};
+}
+
+function lookup(){
+  const email=prompt('Enter the email you used:');
+  if(!email)return;
+  const saved=localStorage.getItem('icas_lead_'+email.trim().toLowerCase());
+  if(!saved){alert('No blueprint found on this device for that email.');return}
+  const obj=JSON.parse(saved);
+  data=obj.data;
+  document.getElementById('landing').classList.add('hidden');
+  document.querySelectorAll('.rail').forEach(r=>r.classList.add('hidden'));
+  if(obj.result){renderDash(obj.result)}else{document.getElementById('loading').classList.remove('hidden');runAnalysis()}
+}
+
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function acc(num,title,bodyHtml,openFirst){return `<div class="acc${openFirst?' open':''}"><div class="accHead" onclick="this.parentElement.classList.toggle('open')"><h3><span class="n">${num}</span>${esc(title)}</h3><span class="accArrow">▾</span></div><div class="accBody">${bodyHtml}</div></div>`}
+
+function renderDash(a){
+  document.getElementById('loading').classList.add('hidden');
+  const d=document.getElementById('dashboard');
+  d.classList.remove('hidden');
+
+  let html=`<img src="/_blob/d04d164e3b95134ef8d02e7848cebb7e" alt="ICA Framework" style="height:30px;margin-bottom:18px"><div class="label">✦ YOUR PROFITABLE GLOBAL NICHE BLUEPRINT</div><h2 style="font-size:24px">Based on your answers, here's your personalized positioning and offer strategy. 🚀</h2>
+  <div class="sumStrip">
+    <div class="sumBox v"><div class="k">🌍 Target Market</div><div class="v2">${esc(a.core.market)}</div></div>
+    <div class="sumBox c"><div class="k">⚠️ Core Problem</div><div class="v2">${esc(a.core.problem)}</div></div>
+    <div class="sumBox m"><div class="k">🎯 Outcome</div><div class="v2">${esc(a.core.outcome)}</div></div>
+  </div>
+
+  <div class="oneLiner">
+    <div class="label" style="margin-bottom:0">💬 08 · YOUR ONE LINE OFFER</div>
+    <div class="txt" id="olPrimary">${esc(a.one_liner.primary)}</div>
+    <button class="btn sm ghost" style="margin-top:10px" onclick="copyTxt('olPrimary')">📋 Copy</button>
+    <div style="margin-top:14px">
+      <div class="olRow"><div><div class="ok">⚡ PROBLEM BASED</div><div class="ov" id="olP">${esc(a.one_liner.problem_based)}</div></div><button class="btn sm ghost" onclick="copyTxt('olP')">📋 Copy</button></div>
+      <div class="olRow"><div><div class="ok">🔄 TRANSFORMATION BASED</div><div class="ov" id="olT">${esc(a.one_liner.transformation_based)}</div></div><button class="btn sm ghost" onclick="copyTxt('olT')">📋 Copy</button></div>
+      <div class="olRow"><div><div class="ok">💰 COMMERCIAL OUTCOME BASED</div><div class="ov" id="olC">${esc(a.one_liner.commercial_based)}</div></div><button class="btn sm ghost" onclick="copyTxt('olC')">📋 Copy</button></div>
+    </div>
+  </div>`;
+
+  html+=acc('01','🎯 Your Core Positioning',`
+    <div class="factorGrid">
+      <div class="f"><b>🛠️ Primary Skill</b>${esc(a.core.skill)}</div>
+      <div class="f"><b>🌍 Primary Target Market</b>${esc(a.core.market)}</div>
+      <div class="f"><b>⚠️ Primary Problem</b>${esc(a.core.problem)}</div>
+      <div class="f"><b>🏁 Desired Outcome</b>${esc(a.core.outcome)}</div>
+    </div>
+    <div class="subcard"><h4>✨ Recommended Positioning</h4><div class="d">${esc(a.core.positioning)}</div></div>
+  `,true);
+
+  html+=acc('02','🌍 Your Global Niche Opportunities', a.niches.map((n,i)=>`
+    <div class="subcard"><h4>📍 Potential Market ${String(i+1).padStart(2,'0')} — ${esc(n.name)}</h4>
+      <div class="t">✅ WHY THIS MAY FIT</div><div class="d">${esc(n.why)}</div>
+      <div class="t">🛠️ POTENTIAL SERVICES</div><div class="d">${esc(n.services)}</div>
+      <div class="t">👥 POTENTIAL CLIENT TYPES</div><div class="d">${esc(n.clients)}</div>
+    </div>`).join('') + `<p class="hint" style="margin-top:10px">⚠️ These are potential market opportunities, not guaranteed outcomes — actual results depend on demand, competition, proof, positioning and execution.</p>`);
+
+  html+=acc('03','🛠️ Your Service Opportunities', a.services.map((s,i)=>`
+    <div class="subcard"><h4>💡 ${String(i+1).padStart(2,'0')}. ${esc(s.name)}</h4>
+      <div class="t">⚠️ WHAT IT SOLVES</div><div class="d">${esc(s.problem)}</div>
+      <div class="t">👤 POTENTIAL CLIENT</div><div class="d">${esc(s.client)}</div>
+      <div class="t">🏁 POTENTIAL OUTCOME</div><div class="d">${esc(s.outcome)}</div>
+    </div>`).join(''));
+
+  html+=acc('04','💎 High Value Market Opportunities', a.high_value.map((h,i)=>`
+    <div class="subcard"><h4>💎 ${esc(h.name)}</h4>
+      <div class="t">✅ WHY</div><div class="d">${esc(h.why)}</div>
+      <div class="t">⚠️ POTENTIAL PROBLEM</div><div class="d">${esc(h.problem)}</div>
+      <div class="t">🛠️ POTENTIAL SERVICE</div><div class="d">${esc(h.service)}</div>
+      <div class="t">🏁 POTENTIAL OUTCOME</div><div class="d">${esc(h.outcome)}</div>
+    </div>`).join(''));
+
+  html+=acc('06','💰 Your Pricing Direction', `
+    <div class="factorGrid"><div class="f"><b>💵 Current Price</b>${esc(data.price)}</div><div class="f"><b>📈 Potential Range</b>${esc(a.pricing.range)}</div></div>
+    <div class="subcard"><h4>🧠 Pricing Logic</h4><ul class="clean">${a.pricing.logic.map(l=>`<li>${esc(l)}</li>`).join('')}</ul></div>
+  `);
+
+  html+=acc('07','📡 Global Client Acquisition Channels', `
+    <div class="subcard"><h4>🥇 Primary — ${esc(a.channels.primary.platform)}</h4><div class="d">${esc(a.channels.primary.why)}</div></div>
+    <div class="subcard"><h4>🥈 Secondary — ${esc(a.channels.secondary.platform)}</h4><div class="d">${esc(a.channels.secondary.why)}</div></div>
+    <div class="subcard"><h4>🥉 Supporting — ${esc(a.channels.supporting.platform)}</h4><div class="d">${esc(a.channels.supporting.why)}</div></div>
+    <div class="subcard"><h4>🗺️ Recommended Acquisition Strategy</h4><ul class="clean">
+      <li>Identify your ideal client profile</li><li>Build a targeted prospect list</li><li>Research each prospect's relevant problems</li><li>Start personalized conversations</li><li>Diagnose the problem</li><li>Present the relevant offer</li><li>Follow up systematically</li><li>Track conversations, meetings and conversions</li><li>Improve positioning based on market feedback</li>
+    </ul></div>
+  `);
+
+  html+=acc('08','🔧 Offer Optimization & Recommendations', `
+    <div class="factorGrid">
+      <div class="f"><b>💬 Clarity</b>${esc(a.optimization.clarity)}</div>
+      <div class="f"><b>⚠️ Problem Strength</b>${esc(a.optimization.problem_strength)}</div>
+      <div class="f"><b>🎯 Outcome Specificity</b>${esc(a.optimization.outcome_specificity)}</div>
+      <div class="f"><b>💰 Commercial Value</b>${esc(a.optimization.commercial_value)}</div>
+      <div class="f"><b>⭐ Differentiation</b>${esc(a.optimization.differentiation)}</div>
+      <div class="f"><b>✅ Proof</b>${esc(a.optimization.proof)}</div>
+      <div class="f"><b>📦 Delivery</b>${esc(a.optimization.delivery)}</div>
+      <div class="f"><b>💵 Pricing</b>${esc(a.optimization.pricing)}</div>
+    </div>
+    <div class="subcard"><h4>💡 Recommendations</h4>${a.recommendations.map((r,i)=>`<div style="margin-top:${i?10:0}px"><b style="font-size:13px;color:#fff">${String(i+1).padStart(2,'0')}. ${esc(r.title)}</b><div class="d">${esc(r.why)}</div></div>`).join('')}</div>
+  `);
+
+  html+=acc('10','🛡️ Risk Reversal', `<div class="subcard"><div class="d">${esc(a.risk_reversal)}</div></div>
+    <p class="hint" style="margin-top:8px">💡 Risk reversal ideas may include: implementation support extensions, additional revisions, milestone-based delivery, or a defined support period — never an unconditional outcome guarantee.</p>`);
+
+  html+=acc('11','📅 Your 30 Day Action Plan', `
+    <div class="weekRow"><div class="wk">🗓️ WEEK 1</div><div><div class="wt">📍 Position</div><ul class="clean"><li>Finalize target market, problem, outcome</li><li>Finalize offer and positioning statement</li><li>Finalize pricing</li></ul></div></div>
+    <div class="weekRow"><div class="wk">🗓️ WEEK 2</div><div><div class="wt">🧰 Prepare</div><ul class="clean"><li>Build prospect list and profile</li><li>Prepare case study / proof assets</li><li>Write outreach message and call structure</li></ul></div></div>
+    <div class="weekRow"><div class="wk">🗓️ WEEK 3</div><div><div class="wt">📣 Acquire</div><ul class="clean"><li>Start targeted outreach</li><li>Run sales conversations and follow-ups</li><li>Test content and partnership conversations</li></ul></div></div>
+    <div class="weekRow"><div class="wk">🗓️ WEEK 4</div><div><div class="wt">📊 Optimize</div><ul class="clean"><li>Review response, conversation and conversion rates</li><li>Review objections and pricing feedback</li><li>Improve niche, positioning, offer and messaging</li></ul></div></div>
+  `);
+
+  html+=`<div style="margin-top:22px"><div class="label">🏆 YOUR FINAL BLUEPRINT</div>
+    <div class="finalGrid">
+      <div class="fi"><div class="k">🛠️ Skill</div><div class="v2">${esc(a.final.skill)}</div></div>
+      <div class="fi"><div class="k">🌍 Target Market</div><div class="v2">${esc(a.final.market)}</div></div>
+      <div class="fi"><div class="k">⚠️ Problem</div><div class="v2">${esc(a.final.problem)}</div></div>
+      <div class="fi"><div class="k">🏁 Outcome</div><div class="v2">${esc(a.final.outcome)}</div></div>
+      <div class="fi"><div class="k">🧩 Service</div><div class="v2">${esc(a.final.service)}</div></div>
+      <div class="fi"><div class="k">📦 Offer</div><div class="v2">${esc(a.final.offer)}</div></div>
+      <div class="fi"><div class="k">💰 Pricing</div><div class="v2">${esc(a.final.pricing)}</div></div>
+      <div class="fi"><div class="k">📡 Channel</div><div class="v2">${esc(a.final.channel)}</div></div>
+      <div class="fi"><div class="k">🎯 Positioning</div><div class="v2">${esc(a.final.positioning)}</div></div>
+      <div class="fi"><div class="k">⏱️ Timeline</div><div class="v2">${esc(a.final.timeline)}</div></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:26px;text-align:center">
+    <h3 style="font-size:18px">🚀 Your next move</h3>
+    <p style="font-size:13.5px;color:var(--sub);margin-top:8px;line-height:1.6">You don't need another 50 ideas. Take one clear positioning hypothesis to the market and test it. Start conversations, present the offer, track the response, and improve.</p>
+    <div style="margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn ghost sm" onclick="location.reload()">🔁 Run It Again</button>
+    </div>
+  </div>
+  <p class="small">💾 Saved to this device under ${esc(data.email)} — reopen this page and use "Enter your email" to view it again.</p>`;
+
+  d.innerHTML=html;
+}
+
+function copyTxt(id){
+  const t=document.getElementById(id).textContent;
+  navigator.clipboard.writeText(t).then(()=>{
+    const tst=document.getElementById('toast'); tst.classList.add('on'); setTimeout(()=>tst.classList.remove('on'),1400);
+  });
+}
+
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal,.bc').forEach(e=>{e.classList.add('reveal');obs.observe(e)});
+</script>
+</body>
+</html>
